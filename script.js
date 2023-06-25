@@ -1,19 +1,19 @@
 let choices = ['rock', 'paper', 'scissors'];
 let playerScore = 0;
 let computerScore = 0;
+let round = 0;
 
-function getComputerChoice(){
-  let randomInteger = Math.floor(Math.random()*choices.length);
+function getComputerChoice() {
+  let randomInteger = Math.floor(Math.random() * choices.length);
   return choices[randomInteger];
 }
 
-
-function playRound(playerSelection, computerSelection){
+function playRound(playerSelection, computerSelection) {
   const combinedValue = playerSelection + ' ' + computerSelection;
-  switch (combinedValue){
+  switch (combinedValue) {
     case 'rock rock':
     case 'paper paper':
-    case 'scissors scissors':  
+    case 'scissors scissors':
       console.log("It's a tie");
       break;
 
@@ -26,7 +26,7 @@ function playRound(playerSelection, computerSelection){
 
     case 'paper scissors':
     case 'scissors rock':
-    case 'rock paper':  
+    case 'rock paper':
       console.log("You lose");
       computerScore++;
       break;
@@ -37,14 +37,26 @@ function playRound(playerSelection, computerSelection){
   }
 }
 
-function game() {
-  for (let round = 1; round <= 5; round++) {
-    console.log(`Round ${round}`);
-    let playerSelection = prompt("Please select your input").toLowerCase();
-    let computerSelection = getComputerChoice(); 
-    playRound(playerSelection, computerSelection);
-  }
+const rock = document.getElementById('rock');
+const paper = document.getElementById('paper');
+const scissors = document.getElementById('scissors');
 
+function buttonClick(e) {
+  const playerSelection = e.target.id;
+  const computerSelection = getComputerChoice();
+  playRound(playerSelection, computerSelection);
+
+  round++;
+  if (round === 5) {
+    endGame();
+  }
+}
+
+rock.addEventListener('click', buttonClick);
+paper.addEventListener('click', buttonClick);
+scissors.addEventListener('click', buttonClick);
+
+function endGame() {
   console.log("Game over!");
 
   if (playerScore > computerScore) {
@@ -56,10 +68,10 @@ function game() {
   }
 }
 
+function game() {
+  playerScore = 0;
+  computerScore = 0;
+  round = 0;
+}
+
 game();
-
-
-
-
-
-
